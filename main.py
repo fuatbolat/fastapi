@@ -9,8 +9,8 @@ def main():
 @app.get("/{kisi}")
 def getsoz(kisi : str):
     sozler = {
-        "ataturk":"umutusz kurumlar",
-        "fuat":"fuat bolat taradından"
+        "test1":"output is test1",
+        "test2":"output is test2"
     }
     soz = sozler.get(kisi)
     return f"output : {soz}"
