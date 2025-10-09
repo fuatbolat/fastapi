@@ -1,0 +1,47 @@
+# Python cache ve bytecode dosyaları
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pkl
+
+# Virtual environment klasörleri
+venv/
+env/
+.venv/
+ENV/
+
+# VSCode ve PyCharm gibi IDE klasörleri
+.vscode/
+.idea/
+
+# Test raporları
+*.log
+*.coverage
+.coverage
+htmlcov/
+
+# Build output
+dist/
+build/
+*.egg-info/
+.eggs/
+
+# Docker dosyaları (image değil, yerel cache’ler)
+*.tar
+.dockerignore
+
+# Azure DevOps agent temp dosyaları
+azure-pipelines/.azuredevops/
+azure-pipelines/.cache/
+
+# OS dosyaları
+.DS_Store
+Thumbs.db
+
+# Ortam değişkenleri (çok önemli)
+.env
+.env.*
+
+# Pytest cache
+.pytest_cache/
