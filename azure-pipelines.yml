@@ -4,7 +4,7 @@ trigger:
       - main
 
 pool:
-  name: 'fastapi-pool'   # Deployment pool
+  name: 'Test'   # Deployment pool
 
 variables:
   IMAGE_NAME: 'fastapi-app'
