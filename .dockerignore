@@ -1,2 +1,10 @@
 .git
 .env
+__pycache__/
+*.pyc
+*.pyo
+*.db
+
+.gitignore
+tests/
+README.md

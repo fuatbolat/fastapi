@@ -1,5 +1,30 @@
 trigger:
-  - main
+  branches:
+    include:
+      - main
 
-stages:
-  - stage: Build
+pool:
+  name: 'fastapi-pool'   # Deployment pool
+
+variables:
+  IMAGE_NAME: 'fastapi-app'
+  CONTAINER_NAME: 'fastapi-container'
+
+steps:
+- checkout: self
+
+- script: |
+    echo "Building Docker image..."
+    docker build -t $(IMAGE_NAME):latest .
+  displayName: 'Build Docker Image'
+
+- script: |
+    echo "Stopping old container..."
+    docker stop $(CONTAINER_NAME) || true
+    docker rm $(CONTAINER_NAME) || true
+  displayName: 'Stop Old Container'
+
+- script: |
+    echo "Starting new container..."
+    docker run -d --name $(CONTAINER_NAME) -p 80:8000 $(IMAGE_NAME):latest
+  displayName: 'Start New Container'
