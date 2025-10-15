@@ -1,30 +1,36 @@
 trigger:
   branches:
     include:
-      - main
+      - main   # main branch push olduğunda tetiklenecek
 
 pool:
-  name: 'Test'   # Deployment pool
+  vmImage: 'ubuntu-latest'  # Microsoft-hosted agent build için
 
 variables:
   IMAGE_NAME: 'fastapi-app'
-  CONTAINER_NAME: 'fastapi-container'
+  TAG: 'latest'
 
 steps:
+# 1️⃣ Kodları checkout et
 - checkout: self
 
-- script: |
-    echo "Building Docker image..."
-    docker build -t $(IMAGE_NAME):latest .
+# 2️⃣ Docker imajını build et
+- task: Docker@2
   displayName: 'Build Docker Image'
+  inputs:
+    command: 'build'
+    repository: '$(IMAGE_NAME)'
+    Dockerfile: '**/Dockerfile'
+    tags: |
+      $(TAG)
 
-- script: |
-    echo "Stopping old container..."
-    docker stop $(CONTAINER_NAME) || true
-    docker rm $(CONTAINER_NAME) || true
-  displayName: 'Stop Old Container'
-
-- script: |
-    echo "Starting new container..."
-    docker run -d --name $(CONTAINER_NAME) -p 80:8000 $(IMAGE_NAME):latest
-  displayName: 'Start New Container'
+# 3️⃣ (Opsiyonel) Docker imajını push etmek istiyorsan
+# Docker Registry bilgilerini gir (örneğin Docker Hub veya ACR)
+# - task: Docker@2
+#   displayName: 'Push Docker Image'
+#   inputs:
+#     command: 'push'
+#     repository: '$(IMAGE_NAME)'
+#     tags: |
+#       $(TAG)
+#     containerRegistry: '<Registry Service Connection>'
